@@ -15,18 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from django_auth.views import Signup, logout
+from django_allauth.views import Navigate
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
 
-    path('', include('django_auth.urls', namespace='auth')),
+    # path('', Navigate.as_view(), name='navigate'),
+    # path('auth/', include('django_auth.urls', namespace='auth')),
+    path('', include('django_allauth.urls', namespace='all_auth')),
+    # path('auth_accounts/', include('django.contrib.auth.urls')), # for django_auth
+    # path('signup/', Signup.as_view(), name='signup'), # for django_auth
+    # path('logout_login/', logout, name='logout_login'), # for django_auth
 
-    re_path(r'^accounts/', include('django.contrib.auth.urls')),  # for django_auth
-    path('signup/', Signup.as_view(), name='signup'),   # for django_auth
-    path('logout_login/', logout, name='logout_login'),     # for django_auth
-
+    re_path('^accounts/', include('allauth.urls')),
 
 ]
